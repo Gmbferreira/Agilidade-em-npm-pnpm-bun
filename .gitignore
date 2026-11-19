@@ -1,0 +1,13 @@
+node_modules/
+
+# Verdaccio: pacotes baixados e estado do processo
+env/verdaccio/storage/
+env/verdaccio/verdaccio.pid
+env/verdaccio/verdaccio.mode
+env/verdaccio/verdaccio.log
+
+# Testes e saídas temporárias
+.tmp/
+
+# Configuração local do mise (não versionar)
+mise.local.toml

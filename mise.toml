@@ -1,0 +1,14 @@
+# Ambiente fixado do experimento (issue #3).
+# Reproduzir com: mise trust && mise install
+# Versões escolhidas em 19/11/2026 — ver docs/03-ambiente.md, seção 3.1.
+
+[tools]
+node = "26.13.1"            # LTS ativa (Lithium); traz o npm 11.20.0 embutido
+pnpm = "12.21.0"            # dist-tag "latest" do pnpm
+bun = "1.4.5"               # última estável do Bun
+hyperfine = "2.0.0"         # ferramenta de medição (M1, M2)
+"npm:verdaccio" = "7.1.2"   # registry local (decisão 2.1-B)
+
+[env]
+# Saída não interativa e sem barras de progresso (variável controlada, docs/02 §2.2)
+CI = "true"

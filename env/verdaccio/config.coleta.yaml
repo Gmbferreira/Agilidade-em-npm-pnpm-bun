@@ -1,0 +1,20 @@
+# Verdaccio — modo COLETA (sem uplink).
+# Serve apenas o que já está no storage local. Qualquer pacote ausente
+# retorna 404 em vez de ir à internet (decisão 2.1-B). Ver docs/03-ambiente.md, seção 3.4.
+
+storage: ./storage
+listen: 127.0.0.1:4873
+
+web:
+  enable: false
+
+packages:
+  '@*/*':
+    access: $all
+    publish: $authenticated
+  '**':
+    access: $all
+    publish: $authenticated
+
+max_body_size: 100mb
+log: { type: stdout, format: pretty, level: warn }

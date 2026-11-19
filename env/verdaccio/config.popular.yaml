@@ -1,0 +1,29 @@
+# Verdaccio — modo POPULAR (com uplink para o registry público).
+# Usado só para baixar e guardar no storage local os pacotes dos projetos.
+# Nunca medir neste modo. Ver docs/03-ambiente.md, seção 3.4.
+
+storage: ./storage
+listen: 127.0.0.1:4873
+
+web:
+  enable: false
+
+uplinks:
+  npmjs:
+    url: https://registry.npmjs.org/
+    cache: true
+    timeout: 60s
+    maxage: 30d   # depois de baixado, o manifesto não é revalidado durante a preparação
+
+packages:
+  '@*/*':
+    access: $all
+    publish: $authenticated
+    proxy: npmjs
+  '**':
+    access: $all
+    publish: $authenticated
+    proxy: npmjs
+
+max_body_size: 100mb
+log: { type: stdout, format: pretty, level: warn }
