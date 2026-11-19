@@ -8,6 +8,7 @@ pnpm = "12.21.0"            # dist-tag "latest" do pnpm
 bun = "1.4.5"               # última estável do Bun
 hyperfine = "2.0.0"         # ferramenta de medição (M1, M2)
 "npm:verdaccio" = "7.1.2"   # registry local (decisão 2.1-B)
+python = "3.15.2"           # runner do benchmark e análise (#4), só biblioteca padrão
 
 [env]
 # Saída não interativa e sem barras de progresso (variável controlada, docs/02 §2.2)

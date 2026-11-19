@@ -70,10 +70,12 @@ M1 tempo de parede · M2 tempo de CPU · M3a/M3b/M3c disco · M4 nº de arquivos
 | Apagar `node_modules` | ✓ | ✓ | ✓ |
 | Apagar o lockfile do gerenciador | ✓ | — | — |
 | Restaurar o lockfile versionado | — | ✓ | ✓ |
-| Limpar cache/store do gerenciador¹ | ✓ | ✓ | — |
+| Limpar cache/store do gerenciador¹ | ✓ | ✓ | ✓² |
 | Instalação de aquecimento (preenche o cache) | — | — | ✓ |
 
 ¹ npm: `~/.npm/_cacache` · pnpm: diretório de `pnpm store path` · Bun: `bun pm cache rm`. Os comandos exatos e os caminhos ficam em #3 e #4.
+
+² Acrescentado na #4. Sem essa limpeza, o cache do S3 acumulava pacotes das células sorteadas antes, e o conteúdo do cache (e o tempo) dependia da ordem aleatória. Com ela, o aquecimento deixa no cache exatamente o projeto da célula.
 
 ## 2.4 Objetos (projetos usados como carga de trabalho)
 
@@ -82,10 +84,12 @@ Os projetos são **carga de trabalho**, não objeto de pesquisa: o que se estuda
 | Projeto | Base | Tamanho esperado da árvore | Verificação funcional (M7) |
 |---|---|---|---|
 | **P1 pequeno** | API Express + TypeScript | Dezenas de pacotes | `tsc --noEmit` + teste simples |
-| **P2 médio** | Template React + TypeScript do `create-vite` | Centenas de pacotes | `npm run build` (`tsc -b && vite build`) |
+| **P2 médio** | Template padrão do `create-react-router` (React Router em modo framework, Vite, TypeScript, Tailwind) | Centenas de pacotes | `react-router typegen && tsc` + `react-router build` |
 | **P3 grande** | Template do `create-next-app` (TypeScript, ESLint) | Centenas a milhares de pacotes | `next build` |
 
-As versões exatas, o número real de pacotes de cada árvore e o gerador usado ficam registrados em #3 e #4. Para a M7, o comando de verificação é sempre executado com o **mesmo runtime** (Node.js), qualquer que seja o gerenciador que instalou. Assim, o que se verifica é a instalação, e não o runtime.
+As versões exatas, o número real de pacotes de cada árvore e o gerador usado ficam registrados em #4 ([04-instrumentacao-piloto.md](04-instrumentacao-piloto.md)).
+
+> **Alteração na #4:** o P2 previsto era o template React + TypeScript do `create-vite`. Com o Vite 8 (rolldown) e o TypeScript 7 (nativo), esse template instala só 28 pacotes, menos que o P1 (78), e deixaria de representar um projeto médio. Ele foi trocado pelo template do `create-react-router` (184 pacotes), que é um gerador oficial, fica entre P1 e P3 e compartilha o React com o P3. Esse compartilhamento é o que o mini-experimento M3c (2.6) precisa. Para a M7, o comando de verificação é sempre executado com o **mesmo runtime** (Node.js), qualquer que seja o gerenciador que instalou. Assim, o que se verifica é a instalação, e não o runtime.
 
 ## 2.5 Plano de execução
 
@@ -101,7 +105,7 @@ As versões exatas, o número real de pacotes de cada árvore e o gerador usado 
 
 **Aleatorização:** a coleta é dividida em **rodadas**. Cada rodada executa as 27 células uma vez, em ordem embaralhada com uma semente registrada. Assim, aquecimento da máquina, processos em segundo plano ou deriva ao longo do dia se distribuem entre os tratamentos em vez de favorecer um deles.
 
-**Ciclo de uma execução:** preparação (2.3, não medida) → comando medido com `/usr/bin/time -v` (M1, M2, M5) → nas rodadas 1–3: `du`/`find` (M3a, M3b, M4), comando de verificação (M7) e registro dos scripts bloqueados (`pnpm ignored-builds`, `bun pm untrusted`).
+**Ciclo de uma execução:** preparação (2.3, não medida) → comando medido com `/usr/bin/time` (M1, M2, M5) → nas rodadas 1–3: `du`/`find` (M3a, M3b, M4), comando de verificação (M7) e registro dos scripts bloqueados (`pnpm ignored-builds`, `bun pm untrusted`).
 
 **Volume estimado:** 27 × 30 = 810 execuções medidas, mais as preparações e as verificações. A ordem de grandeza é de algumas horas de coleta, a confirmar no piloto.
 

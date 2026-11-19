@@ -1,0 +1,70 @@
+{
+  "P1": {
+    "npm": {
+      "lockfile_packages": 97,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": [],
+      "installed_packages": 78,
+      "with_install_script": []
+    },
+    "pnpm": {
+      "lockfile_packages": 97,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": []
+    },
+    "bun": {
+      "lockfile_packages": 97,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": []
+    }
+  },
+  "P2": {
+    "npm": {
+      "lockfile_packages": 226,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": [],
+      "installed_packages": 184,
+      "with_install_script": [
+        "fsevents"
+      ]
+    },
+    "pnpm": {
+      "lockfile_packages": 217,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": []
+    },
+    "bun": {
+      "lockfile_packages": 226,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": []
+    }
+  },
+  "P3": {
+    "npm": {
+      "lockfile_packages": 432,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": [],
+      "installed_packages": 359,
+      "with_install_script": []
+    },
+    "pnpm": {
+      "lockfile_packages": 427,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": []
+    },
+    "bun": {
+      "lockfile_packages": 436,
+      "frozen_ok": true,
+      "m7_ok": true,
+      "blocked": []
+    }
+  }
+}

@@ -28,8 +28,8 @@ Desdobramentos:
 
 | Pergunta (GQM) | Métrica | Unidade | Como medir (detalhado em #2 e #4) |
 |---|---|---|---|
-| Q1. Qual gerenciador instala mais rápido em cada cenário (frio, quente, lockfile)? | **M1** Tempo de parede (wall-clock) da instalação | s | `hyperfine` |
-| | **M2** Tempo de CPU (user + sys) | s | `hyperfine` |
+| Q1. Qual gerenciador instala mais rápido em cada cenário (frio, quente, lockfile)? | **M1** Tempo de parede (wall-clock) da instalação | s | relógio monotônico do runner (`scripts/bench.py`)¹ |
+| | **M2** Tempo de CPU (user + sys) | s | `/usr/bin/time`¹ |
 | | **M6** Speedup em relação ao npm = M1(npm) / M1(x) | adimensional | derivada de M1 |
 | Q2. Quanto disco cada gerenciador ocupa? | **M3a** Tamanho da `node_modules` do projeto | MB | `du` |
 | | **M3b** Pegada real = `node_modules` + store/cache do gerenciador, medidos numa única chamada (hardlinks contados uma vez) | MB | `du` |
@@ -37,6 +37,8 @@ Desdobramentos:
 | | **M4** Nº de arquivos na `node_modules` | contagem | `find \| wc -l` |
 | Q3. Quanto de memória o processo usa? | **M5** Pico de memória residente (max RSS) | MB | `/usr/bin/time -v` |
 | Q4. A instalação é funcionalmente equivalente? | **M7** Instalação válida (o comando de build/teste do projeto passa) | sucesso/falha; proporção | código de saída |
+
+¹ A versão inicial previa o `hyperfine`. Ele foi trocado na #4 porque executa as repetições de um mesmo comando em sequência, o que impede as rodadas embaralhadas do design (docs/02 §2.5), e porque não mede o pico de memória. O runner mede cada execução uma vez, com M1, M2 e M5 juntas. Detalhes em [04-instrumentacao-piloto.md](04-instrumentacao-piloto.md).
 
 **Por que três medidas de disco?** O pnpm e o Bun reaproveitam arquivos de um store global por meio de links (hardlinks) para a `node_modules`. Um `du` só na `node_modules` (M3a) mostra quase o mesmo tamanho para os três e esconde a principal vantagem alegada. Já a pegada real (M3b) e o custo do segundo projeto (M3c) capturam a economia de verdade. Isso é discutido como validade de construto na seção 1.7.
 

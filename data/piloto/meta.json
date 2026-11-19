@@ -1,0 +1,32 @@
+{
+  "seed": 1243178588,
+  "rounds": 5,
+  "disk_rounds": 3,
+  "started_at": "2026-11-19T19:46:25",
+  "git_commit": "d4bc7ba-dirty",
+  "versions": {
+    "npm": "11.20.0",
+    "pnpm": "12.21.0",
+    "bun": "1.4.5",
+    "node": "26.13.1"
+  },
+  "machine": "LENOVO 82MF",
+  "kernel": "7.1.9-arch1-2",
+  "projects": {
+    "P1": "p1-express-ts",
+    "P2": "p2-react-router",
+    "P3": "p3-next"
+  },
+  "cache_paths": {
+    "npm": [
+      "/home/gmbf/.npm/_cacache"
+    ],
+    "pnpm": [
+      "/home/gmbf/.local/share/pnpm/store/v11",
+      "/home/gmbf/.cache/pnpm"
+    ],
+    "bun": [
+      "/home/gmbf/.cache/.bun/install/cache"
+    ]
+  }
+}

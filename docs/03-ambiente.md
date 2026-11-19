@@ -18,6 +18,8 @@ Todas as ferramentas são instaladas pelo [mise](https://mise.jdx.dev) a partir 
 | Bun | **1.4.5** | Última versão estável [3]. |
 | hyperfine | **2.0.0** | Ferramenta de medição de M1 e M2 (docs/01 §1.3). |
 | Verdaccio | **7.1.2** | dist-tag `latest` [4]. Registry local (decisão 2.1-B). |
+| Python | **3.15.2** | Runner do benchmark e cálculo do N (#4); só biblioteca padrão. Acrescentado ao `mise.toml` na #4. |
+| GNU time | **1.10** | Pacote `time` do Arch (`sudo pacman -S time`), fora do mise. Mede a M5 (`/usr/bin/time -v`, max RSS). |
 
 `npm` e `pnpm` rodam sobre o Node.js 26.13.1; o Bun usa o próprio runtime (confusão inerente ao tratamento, docs/02 §2.2).
 
@@ -111,7 +113,6 @@ Antes de cada coleta, o script de #4 deve repetir a última linha (um pacote for
 
 ## 3.5 Pendências para #4
 
-- **`/usr/bin/time` (GNU time) não vem instalado no Arch.** Ele mede a M5 (`-v`, max RSS). Instale com `sudo pacman -S time`. O `env-info.sh` mostra "não instalado" enquanto ele faltar.
 - Popular o Verdaccio com os projetos P1–P3, incluindo as dependências opcionais de plataforma que cada gerenciador pede.
 - Registrar o número real de pacotes de cada árvore.
 

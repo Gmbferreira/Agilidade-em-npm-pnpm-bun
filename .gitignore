@@ -9,5 +9,17 @@ env/verdaccio/verdaccio.log
 # Testes e saídas temporárias
 .tmp/
 
+# Pastas de trabalho do benchmark (cópias dos projetos + node_modules)
+.work/
+
+# Saída bruta de cada instalação (grande; o CSV é o dado versionado)
+data/**/logs/
+
+# Artefatos de build dos projetos de carga
+projects/*/node_modules/
+projects/*/.next/
+projects/*/build/
+projects/*/.react-router/
+
 # Configuração local do mise (não versionar)
 mise.local.toml
